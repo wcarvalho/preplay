@@ -222,15 +222,6 @@
              class="interpolation-image"
              alt="Interpolate start reference image."/>
         <p>
-          <b>Option 1:</b> They have a model of the world that they use to plan a route. Once they have a route, they exhibit more or less reactive behavior as they follow this plan.
-        </p><br>
-        <p>
-          <b>Option 2:</b> They have a general sense of how to get the grocery store and they follow this sense with reactive behavior at first. As they get closer to the juncture point that departs from their prior experience, they use their model of the world to plan a route that completes the task.
-        </p><br>
-        <p>
-          <b>Option 3:</b> They don't plan at all at decision-time but still somehow exhibit fast, reactive behavior to get to the store.
-        </p><br>
-        <p>
           While people certainly exhibit options 1 and 2 sometimes, <b style="color: #D86B14;">we argue that people exhibit option 3 more often than we realize---i.e. that people somehow have access to fast, reactive behavior that can accomplish a novel goal they've previously been exposed to</b>. We hypothesize that this is supported by Multitask Preplay.</p>
         <hr style="height: 3px; background-color: #333; border: none;">
         
@@ -238,11 +229,26 @@
         <img src="./static/images/result-1.png"
              class="interpolation-image"
              alt="Interpolate start reference image."/>
+        <p>When people generalize to a novel goal, they are biased to paths that overlap with paths they used when completing
+        training tasks. When they reuse paths, consistent with being more reactive, their reactions times are significantly
+        smaller than when they take a new path.
+        <br><br>
+        Multitask Preplay predicts that they "Preplayed" completion of the test goal while completing a training goal, and then
+        cached the results into an implicit predictive map of the world. This predictive map then supports fast selection of
+        behaviors that complete this goal later on.</p>
         <hr style="height: 1px; background-color: #333; border: none;">
+        <p>
+          You might wander: how do you know people preplayed the novel task and didn't kind of just "know" the way to go and
+          then do a short amount of planning as they got close to the task (like option 2 above) 🤔?
+          <br><br>
+          To control for this, we have an experiment where we <b>begin</b> people at the juncture points off of their known experience.
+        </p><br>
         <img src="./static/images/result-2.png"
              class="interpolation-image"
              alt="Interpolate start reference image."/>
+        <p>Despite doing a completely novel behavior, <b>people are much faster to do eval task 1 than eval task 2, even if they don't know they'll be evaluated on this task later on</b>. This is consistent with the idea that they "preplayed" eval task 1 during training.</p>
         <hr style="height: 1px; background-color: #333; border: none;">
+
         <img src="./static/images/result-3.png"
              class="interpolation-image"
              alt="Interpolate start reference image."/>
@@ -255,6 +261,7 @@
         </div>
         
         <hr style="height: 1px; background-color: #333; border: none;">
+        <img src="./static/images/crafter.png" class="interpolation-image" alt="Interpolate start reference image." />
         <img src="./static/images/result-4a.png"
              class="interpolation-image"
              alt="Interpolate start reference image."/>
