@@ -1,309 +1,497 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Multitask Preplay in Humans and Machines.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Multitask Preplay in Humans and Machines</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines</title>
+  <meta name="description" content="During offline replay, both humans and AI agents simulate goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to 10,000 unseen Craftax environments." />
+  <link rel="canonical" href="https://wcarvalho.github.io/preplay.github.io/" />
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines" />
+  <meta property="og:description" content="One mechanism. Two puzzles. A single algorithm explains a behavioral bias in people and scales an RL agent to 10,000 unseen worlds. Read the paper." />
+  <meta property="og:url" content="https://wcarvalho.github.io/preplay.github.io/" />
+  <meta property="og:image" content="https://wcarvalho.github.io/preplay.github.io/static/images/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Multitask Preplay — Carvalho · Hall-McMaster · Lee · Gershman. Generalization curve showing only Multitask Preplay continues to scale to 10,000 unseen Craftax environments." />
+  <meta property="og:site_name" content="Multitask Preplay" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="article:author" content="Wilka Carvalho" />
+  <meta property="article:tag" content="reinforcement learning" />
+  <meta property="article:tag" content="cognitive science" />
+  <meta property="article:tag" content="hippocampus" />
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines" />
+  <meta name="twitter:description" content="One mechanism. Two puzzles. A single algorithm explains a behavioral bias in people and scales an RL agent to 10,000 unseen worlds. Read the paper." />
+  <meta name="twitter:image" content="https://wcarvalho.github.io/preplay.github.io/static/images/og-card.png" />
+  <meta name="twitter:image:alt" content="Multitask Preplay — Carvalho · Hall-McMaster · Lee · Gershman." />
+  <meta name="twitter:creator" content="@cogscikid" />
+  <meta name="twitter:site" content="@cogscikid" />
 
-    gtag('js', new Date());
+  <!-- Google Scholar citation tags -->
+  <meta name="citation_title" content="Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines" />
+  <meta name="citation_author" content="Carvalho, Wilka" />
+  <meta name="citation_author" content="Hall-McMaster, Sam" />
+  <meta name="citation_author" content="Lee, Honglak" />
+  <meta name="citation_author" content="Gershman, Samuel J." />
+  <meta name="citation_publication_date" content="2025" />
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2507.05561" />
+  <meta name="citation_arxiv_id" content="2507.05561" />
 
-    gtag('config', 'G-PYVRSFMDRL');
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines",
+    "name": "Multitask Preplay",
+    "abstract": "Humans can pursue a near-infinite variety of tasks, but typically can only pursue a small number at the same time. We hypothesize that humans leverage experience on one task to preemptively learn solutions to other tasks that were accessible but not pursued. We formalize this idea as Multitask Preplay, a novel algorithm that replays experience on one task as the starting point for preplay—counterfactual simulation of an accessible but unpursued task. When implemented within deep reinforcement learning, it predicts human generalization to novel tasks more accurately than traditional planning and predictive representation methods, and improves an artificial agent's ability to generalize to new environments sharing task co-occurrence structure.",
+    "author": [
+      { "@type": "Person", "name": "Wilka Carvalho", "url": "https://cogscikid.com/" },
+      { "@type": "Person", "name": "Sam Hall-McMaster", "url": "https://samhall-mcmaster.com/" },
+      { "@type": "Person", "name": "Honglak Lee", "url": "https://web.eecs.umich.edu/~honglak/" },
+      { "@type": "Person", "name": "Samuel J. Gershman", "url": "https://gershmanlab.com/" }
+    ],
+    "datePublished": "2025-07-07",
+    "publisher": { "@type": "Organization", "name": "arXiv" },
+    "url": "https://wcarvalho.github.io/preplay.github.io/",
+    "sameAs": "https://arxiv.org/abs/2507.05561",
+    "identifier": "arXiv:2507.05561",
+    "image": "https://wcarvalho.github.io/preplay.github.io/static/images/og-card.png"
+  }
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./static/images/favicon.svg" />
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <style>
+    :root {
+      --bg: #fbf9f5;
+      --surface: #ffffff;
+      --ink: #1a1a1a;
+      --ink-soft: #4a4a4a;
+      --ink-muted: #767676;
+      --rule: #e6e2da;
+      --accent: #b04a2f;
+      --accent-soft: #f3d9cf;
+      --highlight: #fff4cf;
+      --code-bg: #f4f1ea;
+      --placeholder-bg: #fff8e8;
+      --placeholder-rule: #d9b86b;
+      --placeholder-ink: #6b4f1c;
+      --font-serif: "Source Serif 4", "Source Serif Pro", "Charter", "Iowan Old Style", Georgia, serif;
+      --font-sans: "Inter", "Helvetica Neue", "Arial", system-ui, sans-serif;
+      --font-mono: "Berkeley Mono", "JetBrains Mono", "SF Mono", "Menlo", monospace;
+      --fs-base: 20px; --fs-sm: 16px; --fs-lg: 22px; --fs-xl: 28px; --fs-2xl: 38px; --fs-3xl: 54px;
+      --lh-tight: 1.2; --lh-body: 1.6;
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 16px; --sp-4: 24px; --sp-5: 32px; --sp-6: 48px; --sp-7: 64px;
+      --measure: 70ch; --col-wide: 1100px;
+      --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+      --shadow-sm: 0 1px 2px rgba(20,20,20,0.04), 0 2px 6px rgba(20,20,20,0.04);
+      --shadow-md: 0 4px 16px rgba(20,20,20,0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: var(--font-serif); font-size: var(--fs-base); line-height: var(--lh-body);
+      font-feature-settings: "kern", "liga", "onum";
+      text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 600; line-height: var(--lh-tight); margin: 0 0 var(--sp-3); letter-spacing: -0.01em; }
+    h1 { font-size: var(--fs-3xl); letter-spacing: -0.02em; }
+    h2 { font-size: var(--fs-2xl); margin-top: var(--sp-7); }
+    h3 { font-size: var(--fs-xl); margin-top: var(--sp-5); }
+    h4 { font-size: var(--fs-lg); }
+    p { margin: 0 0 var(--sp-3); }
+    a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--accent-soft); transition: text-decoration-color 0.15s ease; }
+    a:hover { text-decoration-color: var(--accent); }
+    code, pre, kbd { font-family: var(--font-mono); }
+    code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 0.92em; }
+    pre { background: var(--code-bg); padding: var(--sp-4); border-radius: var(--radius-md); overflow-x: auto; font-size: var(--fs-sm); line-height: 1.5; border: 1px solid var(--rule); }
+    pre code { background: none; padding: 0; font-size: inherit; }
+    .container { max-width: var(--col-wide); margin: 0 auto; padding: 0 var(--sp-4); }
+    .measure { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    section { padding: var(--sp-6) 0; }
+    section + section { border-top: 1px solid var(--rule); }
+    .hero { padding: var(--sp-7) 0 var(--sp-6); text-align: left; }
+    .hero__eyebrow { font-family: var(--font-sans); font-size: var(--fs-sm); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: var(--sp-3); }
+    .hero__title { font-size: clamp(34px, 5vw, var(--fs-3xl)); margin-bottom: var(--sp-4); max-width: 22ch; }
+    .hero__claim { font-size: var(--fs-xl); color: var(--ink-soft); margin-bottom: var(--sp-4); max-width: 50ch; font-style: italic; line-height: 1.4; }
+    .hero__authors { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: var(--sp-5); line-height: 1.7; }
+    .hero__authors .author { white-space: nowrap; }
+    .hero__authors .author + .author::before { content: " · "; color: var(--ink-muted); }
+    .hero__authors .affiliation-line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); color: var(--ink-muted); margin-top: var(--sp-3); font-size: 14px; }
+    .hero__authors .affiliation-line .lab-logo { height: 22px; width: auto; opacity: 0.85; vertical-align: middle; margin-right: var(--sp-2); }
+    .hero__authors .affil-group { display: inline-flex; align-items: center; gap: 6px; }
+    .hero__demo { margin: var(--sp-5) 0; border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-md); border: 1px solid var(--rule); }
+    .hero__demo img, .hero__demo video { display: block; width: 100%; height: auto; }
+    .hero__demo figcaption { padding: var(--sp-3) var(--sp-4); font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.5; }
+    .button-row { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin: var(--sp-4) 0; }
+    .btn { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 10px 18px; background: var(--ink); color: var(--bg); font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 500; text-decoration: none; border-radius: 999px; border: 1px solid var(--ink); transition: background 0.15s ease; min-height: 44px; }
+    .btn:hover { background: var(--accent); border-color: var(--accent); text-decoration: none; }
+    .btn--secondary { background: transparent; color: var(--ink); border-color: var(--rule); }
+    .btn--secondary:hover { background: var(--surface); border-color: var(--ink); color: var(--ink); }
+    .btn--placeholder { background: transparent; color: var(--ink-muted); border-color: var(--rule); border-style: dashed; cursor: default; }
+    .btn--placeholder:hover { background: transparent; color: var(--ink-muted); border-color: var(--rule); }
+    .btn .icon { width: 18px; height: 18px; flex-shrink: 0; }
+    .section__heading { font-family: var(--font-sans); font-size: var(--fs-sm); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--sp-2); }
+    .tldr { background: var(--surface); border-left: 4px solid var(--accent); padding: var(--sp-4) var(--sp-5); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: var(--sp-5) 0; }
+    .tldr p { font-size: var(--fs-lg); margin-bottom: 0; }
+    .tldr p strong { background: linear-gradient(transparent 60%, var(--highlight) 60%); }
+    .contributions { list-style: none; padding: 0; margin: var(--sp-4) 0; counter-reset: contrib; }
+    .contributions li { counter-increment: contrib; position: relative; padding-left: var(--sp-7); margin-bottom: var(--sp-4); }
+    .contributions li::before { content: counter(contrib); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--bg); display: grid; place-items: center; font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 600; }
+    figure { margin: var(--sp-5) 0; text-align: center; }
+    figure img, figure video { max-width: 100%; height: auto; border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm); }
+    figcaption { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); text-align: left; margin-top: var(--sp-3); max-width: var(--measure); margin-left: auto; margin-right: auto; line-height: 1.55; }
+    figcaption .figure-label { font-weight: 600; color: var(--ink); margin-right: var(--sp-2); }
+    .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+    @media (max-width: 720px) { .fig-grid { grid-template-columns: 1fr; } }
+    .pullquote { font-size: var(--fs-2xl); line-height: 1.3; font-style: italic; color: var(--ink); border-left: 4px solid var(--accent); padding: var(--sp-4) var(--sp-6); margin: var(--sp-6) 0; max-width: 30ch; }
+    .bibtex { position: relative; }
+    .bibtex pre { margin: 0; }
+    .bibtex__copy { position: absolute; top: var(--sp-3); right: var(--sp-3); background: var(--ink); color: var(--bg); border: none; border-radius: var(--radius-sm); padding: 6px 12px; font-family: var(--font-sans); font-size: var(--fs-sm); cursor: pointer; min-height: 32px; }
+    .bibtex__copy:hover { background: var(--accent); }
+    .bibtex__copy[data-state="copied"] { background: #2d7a3a; }
+    details.methods { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-md); padding: var(--sp-4) var(--sp-5); margin: var(--sp-5) 0; }
+    details.methods summary { font-family: var(--font-sans); font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); cursor: pointer; list-style: none; font-weight: 600; }
+    details.methods summary::-webkit-details-marker { display: none; }
+    details.methods summary::after { content: "▸"; margin-left: var(--sp-2); display: inline-block; transition: transform 0.15s ease; }
+    details.methods[open] summary::after { transform: rotate(90deg); }
+    details.methods .methods__body { margin-top: var(--sp-4); font-family: var(--font-serif); font-size: var(--fs-base); }
+    details.methods .methods__body code { font-family: var(--font-mono); }
+    footer { padding: var(--sp-7) 0 var(--sp-6); border-top: 1px solid var(--rule); font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); }
+    footer a { color: inherit; }
+    footer .footer__cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--sp-5); }
+    @media (max-width: 720px) { footer .footer__cols { grid-template-columns: 1fr; } }
+    footer h4 { font-family: var(--font-sans); font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); margin: 0 0 var(--sp-3); }
+    footer ul { list-style: none; padding: 0; margin: 0; }
+    footer ul li { margin-bottom: var(--sp-2); }
+    .topnav { position: sticky; top: 0; z-index: 10; background: rgba(251, 249, 245, 0.92); backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); border-bottom: 1px solid var(--rule); }
+    .topnav__inner { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) var(--sp-4); max-width: var(--col-wide); margin: 0 auto; }
+    .topnav__brand { font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 600; text-decoration: none; color: var(--ink); }
+    .topnav__links { display: flex; gap: var(--sp-4); font-family: var(--font-sans); font-size: var(--fs-sm); }
+    .topnav__links a { color: var(--ink-soft); text-decoration: none; }
+    .topnav__links a:hover { color: var(--accent); }
+    @media (max-width: 720px) { .topnav__links { display: none; } }
+    @media (max-width: 720px) {
+      :root { --fs-base: 18px; --fs-3xl: 38px; --fs-2xl: 30px; --fs-xl: 22px; }
+      section { padding: var(--sp-5) 0; }
+      .hero { padding: var(--sp-5) 0; }
+      .button-row .btn { flex: 1 1 calc(50% - var(--sp-3)); justify-content: center; }
+    }
+    @media print {
+      .topnav, .button-row, .bibtex__copy { display: none; }
+      body { background: white; }
+      a { color: var(--ink); text-decoration: underline; }
+    }
+  </style>
 </head>
 <body>
 
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://cogscikid.com">
-        <span class="icon">
-          <i class="fas fa-home"></i>
-        </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://arxiv.org/abs/2502.20349">
-            Naturalistic Computational Cognitive Science
-          </a>
-          <a class="navbar-item" href="https://github.com/KempnerInstitute/nicewebrl">
-            NiceWebRL
-          </a>
-          <a class="navbar-item" href="https://arxiv.org/abs/2402.06590">
-            Predictive Representations: Building Blocks of Intelligence
-          </a>
-        </div>
-      </div>
+<nav class="topnav">
+  <div class="topnav__inner">
+    <a class="topnav__brand" href="#">Multitask Preplay</a>
+    <div class="topnav__links">
+      <a href="#tldr">TLDR</a>
+      <a href="#idea">Idea</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#results">Results</a>
+      <a href="#cite">Cite</a>
     </div>
-
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-body" style="padding-top: 1rem; padding-bottom: 0.5rem;">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Preemptive Solving of Future Problems:<br>Multitask Preplay in Humans and Machines</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://cogscikid.com/">Wilka Carvalho</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://samhall-mcmaster.com/">Sam Hall-McMaster</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a><sup>3,4</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://gershmanlab.com/">Samuel J. Gershman</a><sup>1,2</sup>
-            </span>
-          </div>
+<main class="container">
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Kempner Institute for the Study of Natural and Artificial Intelligence, Harvard University,</span>
-            <span class="author-block"><sup>2</sup>Department of Psychology and Center for Brain Science, Harvard University,</span>
-            <span class="author-block"><sup>3</sup>Department of Computer Science & Engineering, University of Michigan,</span>
-            <span class="author-block"><sup>4</sup>LG AI Research</span>
-          </div>
+  <!-- HERO ============================================================ -->
+  <section class="hero">
+    <div class="hero__eyebrow">Multitask Preplay · Preprint · 2025</div>
+    <h1 class="hero__title">Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines</h1>
+    <p class="hero__claim">During offline replay, humans and AI agents simulate goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to thousands of unseen worlds.</p>
 
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2507.05561"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://docs.google.com/presentation/d/1qR1M4uM-fJ6Xcj8duBI48CAeqZBN4MlE2uv74NlfKYI/edit?usp=sharing"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-powerpoint"></i>
-                  </span>
-                  <span>Slides</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/wcarvalho/multitask_preplay"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Multitask Preplay Code</span>
-                  </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/KempnerInstitute/nicewebrl" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fab fa-github"></i>
-                  </span>
-                  <span>NiceWebRL</span>
-                </a>
-              </span>
-
-            </div>
-
-          </div>
-        </div>
+    <div class="hero__authors">
+      <span class="author"><a href="https://cogscikid.com/">Wilka Carvalho</a><sup>1</sup></span><span class="author"><a href="https://samhall-mcmaster.com/">Sam Hall-McMaster</a><sup>2</sup></span><span class="author"><a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a><sup>3,4</sup></span><span class="author"><a href="https://gershmanlab.com/">Samuel J. Gershman</a><sup>1,2</sup></span>
+      <div class="affiliation-line">
+        <span class="affil-group"><img class="lab-logo" src="./static/images/kempner.png" alt=""><sup>1</sup>Kempner Institute · Harvard</span>
+        <span class="affil-group"><img class="lab-logo" src="./static/images/harvard.svg" alt=""><sup>2</sup>Psychology &amp; CBS · Harvard</span>
+        <span class="affil-group"><img class="lab-logo" src="./static/images/michigan.jpg" alt=""><sup>3</sup>CSE · Michigan</span>
+        <span class="affil-group"><img class="lab-logo" src="./static/images/lg.png" alt=""><sup>4</sup>LG AI Research</span>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="section" style="padding-top: 1rem; padding-bottom: 0.5rem;">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-three-fifths">
-        <div class="content has-text-justified">
-          <p">
-            We hypothesize that humans leverage experience on some tasks to preemptively learn solutions for other tasks that were accessible but unpursued. By doing so, they obtain reactive behavior that is adaptive to <em>novel, unpursued tasks</em>---something typically associated with deliberate planning. We operationalize this as Multitask Preplay and present behavioral evidence with a gridworld domain and a 2D minecraft domain. We conclude with AI simulations in the 2D minecraft domain showing that Multitask Preplay improves generalization of complex tasks to <em>new environments</em> that share task co-occurrence structure.
-          </p>
-        </div>
-      </div>
+    <div class="button-row" role="group" aria-label="Paper resources">
+      <a class="btn" href="https://arxiv.org/pdf/2507.05561" target="_blank" rel="noopener" aria-label="Download paper PDF">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.414L9.586 0H4Zm5 1.5L13 5.5H10a1 1 0 0 1-1-1V1.5Z"/></svg>
+        Paper (PDF)
+      </a>
+      <a class="btn btn--secondary" href="https://arxiv.org/abs/2507.05561" target="_blank" rel="noopener" aria-label="View on arXiv">arXiv</a>
+      <a class="btn btn--secondary" href="https://github.com/wcarvalho/multitask_preplay" target="_blank" rel="noopener" aria-label="View source code on GitHub">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        Code
+      </a>
+      <a class="btn btn--secondary" href="https://doi.org/10.17605/OSF.IO/B2EVM" target="_blank" rel="noopener" aria-label="Craftax data on OSF">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C4.687 0 2 1.343 2 3v10c0 1.657 2.687 3 6 3s6-1.343 6-3V3c0-1.657-2.687-3-6-3Z"/></svg>
+        Data
+      </a>
+      <a class="btn btn--secondary" href="https://x.com/cogscikid/status/2052370912607961247" target="_blank" rel="noopener" aria-label="Read the launch thread on X">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M9.294 6.928 14.357 1h-1.2L8.762 6.147 5.246 1H1.192l5.31 7.728L1.192 15h1.2l4.642-5.394L10.754 15h4.054L9.294 6.928Zm-1.643 1.91-.538-.77L2.823 1.91h1.844l3.456 4.945.538.77 4.49 6.42h-1.844L7.651 8.838Z"/></svg>
+        Thread
+      </a>
+      <a class="btn btn--secondary" href="https://docs.google.com/presentation/d/1qR1M4uM-fJ6Xcj8duBI48CAeqZBN4MlE2uv74NlfKYI/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View slides">Slides</a>
     </div>
-  </div>
-</section>
 
-<section class="section" style="padding-top: 1rem; padding-bottom: 0.5rem;">
-  <div class="container is-max-desktop">
+    <figure class="hero__demo">
+      <video autoplay muted loop playsinline preload="metadata" fetchpriority="high" aria-label="Craftax preplay demo. An agent encounters and caches accessible-but-unpursued goals during one task, then reactively reaches an unannounced goal in a new world.">
+        <source src="./static/videos/preplay-hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <figcaption><span class="figure-label">Demo.</span> One mechanism. Two puzzles. While pursuing one task in our 2D Minecraft (Craftax) environment, an agent encounters goals it didn't pursue — and caches solutions for them via offline preplay. When a new task arrives, behavior is fast and reactive, as if the solution had been pre-rehearsed.</figcaption>
+    </figure>
+  </section>
 
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h3 class="title is-3">Multitask Preplay</h3>
-        <div class="publication-image">
-          <img src="./static/images/algo.png" alt="Algorithm overview" style="width: 100%; max-width: 1200px;">
-        </div>
+  <!-- TLDR ============================================================ -->
+  <section id="tldr">
+    <div class="measure">
+      <div class="section__heading">TLDR</div>
+
+      <div class="tldr">
+        <p><strong>People are faster at new tasks when they reuse an old path</strong> — even when the reused path is longer than the optimal shortcut. We argue this happens because, during offline replay, humans and AI agents simulate goals they didn't pursue — caching solutions into a shared predictive representation. The same algorithm explains a behavioral bias in people <em>and</em> scales an RL agent to 10,000 unseen Craftax worlds.</p>
       </div>
+
+      <ol class="contributions">
+        <li><strong>Algorithm.</strong> Multitask Preplay: replay one task; preplay the goals you observed but didn't pursue; cache the resulting trajectories into a shared predictive representation.</li>
+        <li><strong>Behavioral evidence.</strong> Across grid-world and Craftax experiments (n≈100/each, four pre-registered predictions), people behave as if they have rehearsed unannounced goals — faster RTs at familiar junctures, partial path reuse even when the new shortcut is shorter.</li>
+        <li><strong>AI scaling.</strong> Beats Dyna, Universal Value Functions, Universal Successor Features, and Hindsight Experience Replay on transfer to 10,000 held-out Craftax environments.</li>
+        <li><strong>Bridging.</strong> One computational idea — offline counterfactual simulation — connects human behavioral biases to RL generalization. AI and cognitive science can keep informing each other on this template.</li>
+      </ol>
     </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
+  </section>
 
+  <!-- THE IDEA ======================================================== -->
+  <section id="idea">
+    <div class="measure">
+      <div class="section__heading">The Idea</div>
+      <h2>One mechanism. Two puzzles.</h2>
 
-<section class="section" style="padding-top: 0.5rem;">
-  <div class="container is-max-desktop">
+      <p>While searching for coffee in a new neighborhood, you may come across gyms, grocery stores, and parks — enabling you to quickly find these locations later when you need them. You weren't told to look for the grocery store. But when the goal becomes "go to the grocery store," your behavior is fast and reactive, as if you'd planned the route already.</p>
 
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
+      <p>We hypothesize this happens because, during offline replay, you image pursuing goals you encountered along the way <em>but didn't actually pursue</em>. Those counterfactual trajectories cache into a single value function that covers many goals. We call it <strong>Multitask Preplay</strong> — a nod to hippocampal preplay, where place cells fire for places the animal hasn't been yet. The underlying RL idea goes back to Kaelbling in the 90s: use one experience to learn about many goals. We wanted to see what it looks like at scale.</p>
 
-        <hr style="height: 3px; background-color: #333; border: none;">
-        <p>Consider someone that has moved to a new neighborhood and visited two coffee shops. Along the way, they observed a grocery store along their route. When they later want to go to the grocery store from their home, what behavior do you think they will exhibit?</p>
-        <img src="./static/images/question.png"
-             class="interpolation-image"
-             alt="Interpolate start reference image."/>
-        <p>
-          While people certainly exhibit options 1 and 2 sometimes, <b style="color: #D86B14;">we argue that people exhibit option 3 more often than we realize---i.e. that people somehow have access to fast, reactive behavior that can accomplish a novel goal they've previously been exposed to</b>. We hypothesize that this is supported by Multitask Preplay.</p>
-        <hr style="height: 3px; background-color: #333; border: none;">
-        
-        <h2 class="title is-3">Results</h2>
-        <img src="./static/images/result-1.png"
-             class="interpolation-image"
-             alt="Interpolate start reference image."/>
-        <hr style="height: 1px; background-color: #333; border: none;">
-        <img src="./static/images/result-2.png"
-             class="interpolation-image"
-             alt="Interpolate start reference image."/>
-        <hr style="height: 1px; background-color: #333; border: none;">
-
-        <img src="./static/images/result-3.png"
-             class="interpolation-image"
-             alt="Interpolate start reference image."/>
-        <h3 class="title is-5">Video of person completing generalization task. Left is global view. Right is what they see.</h3>
-        <div class="content has-text-centered" style="margin: 20px 0;">
-          <video controls muted autoplay loop playsinline style="width: 100%; max-width: 800px;">
-            <source src="./static/videos/craftax-reuse-example.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        
-        <hr style="height: 1px; background-color: #333; border: none;">
-        <img src="./static/images/crafter.png" class="interpolation-image" alt="Interpolate start reference image." />
-        <img src="./static/images/result-4a.png"
-             class="interpolation-image"
-             alt="Interpolate start reference image."/>
-        <div class="content has-text-centered">
-          <img src="./static/images/result-4b.png"
-               class="interpolation-image"
-               alt="Interpolate start reference image."
-               style="width: 80%; max-width: 1200px;"/>
-        </div>
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            <a href="https://github.com/KempnerInstitute/nicewebrl">NiceWebRL</a> is a Python library for quickly making human subject experiments that leverage machine RL environments. It supports making online web experiments with 50+ machine RL environments and was used for all experiments in this paper.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2502.20349">Naturalistic Computational Cognitive Science: Towards generalizable models and theories that capture the full range of natural behavior</a>. This is a position paper on why and how we can build generalizable models of human behavior that can scale up to increasingly naturalistic experimental paradigms. This project is an example of doing that: we first predict human behavior in a fully-observable grid-world, and then in a partially-observable 2D minecraft environment.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2402.06590">Predictive representations: building blocks of intelligence</a>. This is a review of predictive representations in machine learning, cognitive science, and neuroscience. We focus on the family of predictive representations defined by the successor representation, but the arguments equally apply to the family defined by <a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">generalized value functions</a> (which Multitask Preplay is an example of). 
-          </p>
-        </div>
-      </div>
+      <p>Multitask Preplay generalizes Dyna, which only caches the goal you pursued. It sits between Dyna (model-based, single-task) and successor features (predictive representations across goals), combining what each does well.</p>
     </div>
-    <!--/ Concurrent Work. -->
 
-  </div>
-</section>
+    <figure>
+      <img src="./static/images/preplay-schematic.png" alt="Schematic of Multitask Preplay. While pursuing goal g, the agent observes accessible goal g' along the trajectory; offline, it preplays a counterfactual rollout to g' and caches predictions for both into a shared value function." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 1.</span> Multitask Preplay overview. (1) The agent pursues a task and observes other accessible goals along the way. (2) During offline replay, the agent counterfactually simulates pursuit of those other goals. (3) Predictions for all goals are cached into a shared representation. (4) When an unannounced goal becomes the actual task, behavior is fast and reactive — no new experience or planning required.</figcaption>
+    </figure>
 
+    <figure>
+      <img src="./static/images/algo-comparison.png" alt="Two-axis categorization of RL methods. Top: a 2x3 grid mapping number-of-predictions-per-state (single reward vs. multiple) against compute strategy (model-free, model-based background learning, decision-time planning). Multitask Preplay (Ours) sits in the multi-prediction model-based-background cell. Bottom: gridworld behavior for Q-learning, Successor Features / HER, Dyna, and Multitask Preplay, showing what each caches when the agent has experienced the path to a coffee shop while observing food and grocery store along the way." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 2.</span> Where Multitask Preplay fits among RL methods. <strong>Top:</strong> Two axes — number of predictions per state (1 reward vs. multiple) × compute strategy (model-free, model-based background learning, decision-time planning). Yellow methods cache the results of computation; purple methods leverage model-based planning. <strong>Bottom:</strong> Behavior in a gridworld where the agent walked to a coffee shop while passing food and a grocery store. <strong>(a) Q-learning</strong> caches a single reward prediction along the experienced path. <strong>(b) Successor Features / HER</strong> cache predictions for multiple goals — but only those whose features were experienced. <strong>(c) Dyna</strong> simulates extra coffee-shop trajectories to refine the same single prediction. <strong>(d) Multitask Preplay</strong> simulates trajectories to <em>accessible-but-unpursued</em> goals (food, groceries), caching a predictive map that covers all three.</figcaption>
+    </figure>
+  </section>
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{carvalho2025preemptive,
+  <!-- BEHAVIORAL EVIDENCE ============================================= -->
+  <section id="evidence">
+    <div class="measure">
+      <div class="section__heading">Behavioral Evidence</div>
+      <h2>People behave as if they've rehearsed goals they were never told about.</h2>
+
+      <p>In principle, you'd rehearse tasks you expect to face. In practice, our experiments suggest people behave as if they've rehearsed goals they weren't told about. Spawn them at a familiar juncture, point them at an unannounced goal — they're faster than at a novel spot the same distance away. Only Multitask Preplay predicts this pattern.</p>
+
+      <p>Across four pre-registered grid-world experiments and a 2D Minecraft (Craftax) experiment, we test specific predictions. The headline finding: people are <strong>faster</strong> at a new task when they partially reuse a training path — <strong>even when the reused path is longer than the optimal shortcut</strong>. Reused-path length 61 vs. shortcut length 55; subjects still partially reuse 62.8% of the time, and step-by-step response times are lower on the reused step. This inverts what model-free, decision-time, or hindsight-based methods predict.</p>
+    </div>
+
+    <figure>
+      <video controls muted loop playsinline preload="metadata" aria-label="A real subject performing a juncture-condition trial in our grid-world experiment. The subject's path partially reuses a training path even when a shorter shortcut is available.">
+        <source src="./static/videos/juncture-experiment.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <figcaption><span class="figure-label">Demo.</span> A subject performing a juncture-condition trial. The subject's path partially reuses a previously trained route — even though a shorter alternative is visible. Response times on reused steps are faster than on novel ones.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./static/images/result-1.png" alt="Grid-world experiments and model comparisons. Multitask Preplay best matches human success and path-reuse rates." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 3a.</span> Grid-world (JaxMaze) results. Across four experiments, Multitask Preplay best matches human success rates and path-reuse rates. Decision-time planning matches success but not path-reuse. Successor features and hindsight experience replay match neither.</figcaption>
+    </figure>
+    <figure>
+      <img src="./static/images/result-2.png" alt="Response time analysis on grid-world experiments." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 3b.</span> Response-time evidence consistent with offline preplay. Subjects spawned at a familiar juncture (used during training) are faster than subjects spawned the same distance from the goal at a novel location.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./static/images/crafter.png" alt="An example Craftax map with a starting agent, training stones, and an evaluation stone visible nearby." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 4a.</span> 2D Minecraft (Craftax) experiment. Subjects learn to obtain training stones across procedurally generated maps. Each map contains a visibly nearby evaluation stone they may or may not be told about.</figcaption>
+    </figure>
+    <figure>
+      <img src="./static/images/result-3.png" alt="Craftax behavioral results. Multitask Preplay best matches human generalization success and path-reuse rates." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 4b.</span> Craftax behavioral results. Of all model classes tested, Multitask Preplay best matches human generalization success and path-reuse rates.</figcaption>
+    </figure>
+  </section>
+
+  <!-- RESULTS — THE CLIFF ============================================= -->
+  <section id="results">
+    <div class="measure">
+      <div class="section__heading">Results</div>
+      <h2>Only humans and Multitask Preplay clear the cliff.</h2>
+
+      <p>The ablation we found most telling: in Craftax, every baseline — Dyna, Universal Value Functions, Successor Features, Hindsight Experience Replay — trains to near-perfect success. At test, only humans and Multitask Preplay transfer. Every other method collapses.</p>
+    </div>
+
+    <figure>
+      <img src="./static/images/train-test-cliff.png" alt="Train and test panels side-by-side. All methods reach near-perfect performance during training. At test, only Human and Multitask Preplay bars stand; all other RL baselines fall to near zero." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 5.</span> Train vs. test on Craftax. <strong>Train</strong> (left): all methods, including humans, reach near-ceiling performance. <strong>Test</strong> (right): only humans and Multitask Preplay transfer. Every other RL baseline collapses. Humans and AI are evaluated on the same test set.</figcaption>
+    </figure>
+
+    <h3 id="generalization">One agent, 10,000 new worlds.</h3>
+    <div class="measure">
+      <p>This same algorithm scales further. When learning from a finite set of environments, Multitask Preplay better generalizes to 10,000 unseen Craftax worlds. Dyna and model-free methods plateau long before that.</p>
+    </div>
+
+    <figure>
+      <img src="./static/images/generalization-curve.png" alt="Generalization performance to 10,000 unique held-out environments as a function of training environment count. Multitask Preplay continues to scale; Dyna and model-free baselines plateau." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 6.</span> AI generalization to 10,000 held-out Craftax environments. Multitask Preplay continues to improve as the training-environment count increases. Dyna (1M training steps) and model-free methods (10M training steps) plateau long before. Each point: mean ± SE across 5 model initializations.</figcaption>
+    </figure>
+  </section>
+
+  <!-- WHY IT MATTERS ================================================== -->
+  <section id="why">
+    <div class="measure">
+      <blockquote class="pullquote">Two signatures in different systems, one computational idea underneath.</blockquote>
+      <p>The same trick that explains a behavioral bias in people also scales an RL agent to unseen worlds. We're hopeful this is a template for how AI and cognitive science can keep informing each other: a computational-level claim that constrains both the algorithm space (in RL) and the hypothesis space (in cognitive science).</p>
+    </div>
+  </section>
+
+  <!-- LIMITATIONS ===================================================== -->
+  <section id="limitations">
+    <div class="measure">
+      <div class="section__heading">Limitations</div>
+      <h2>What this work doesn't do.</h2>
+
+      <p><strong>You need a reasonably accurate world model to preplay with.</strong> Multitask Preplay assumes access to a model that can roll out counterfactual goals during offline replay. We use ground-truth simulators in this paper. Whether the result holds when the world model itself is learned online — and how preplay interacts with a noisy or biased model — is not established here.</p>
+
+      <p><strong>Tested on 2D environments with discrete tasks.</strong> Our results span gridworlds and 2D Minecraft. Whether the same mechanism scales to high-dimensional continuous control or to compositionally complex task structures (Habitat-class transfer) is the natural next step, but it's not what we showed.</p>
+
+      <p><strong>Behavioral evidence is consistent with preplay, not unique to it.</strong> Our behavioral predictions are derived from Multitask Preplay; the data is consistent with the algorithm. Other algorithms that share core properties (e.g., off-policy multi-goal value caching with TD-learning) may make similar predictions. The strongest part of the bridge claim is that <em>Multitask Preplay alone</em> matches both human path-reuse rates and the train/test cliff among the baselines we compared.</p>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT + METHODS =========================================== -->
+  <section id="next">
+    <div class="measure">
+      <div class="section__heading">What's Next</div>
+      <h2>Where this goes.</h2>
+
+      <p>Next we want to see what happens when the world model is learned online — for example, with MuZero — and to scale to domains like Habitat, where agents need to perform inter-related tasks in unseen homes.</p>
+
+      <p>Scaling there will lean on two corrections we developed along the way: <strong>off-task Q(λ)</strong> and <strong>conservative all-goals learning</strong>. They're what let us match the human data — and what we think will unlock Habitat-class transfer.</p>
+
+      <details class="methods">
+        <summary>Methods (for the technically curious)</summary>
+        <div class="methods__body">
+          <p><strong>Off-task Q(λ).</strong> Propagates multi-step returns across goals the agent didn't pursue — a correction on Peng's Q(λ), applied on the goal axis instead of the policy axis. The trace is cut when the greedy actions for the off-task goal diverge from the actions actually taken, preventing erroneous backup of value from on-task rewards that don't apply to the off-task goal.</p>
+          <p><strong>Conservative all-goals learning.</strong> Keeps value estimates from drifting when extrapolating to unseen goals. Penalizes Q-values for actions absent from the data, suppressing inflated estimates while still propagating value from the true off-task reward.</p>
+          <p>Both corrections are drop-in on a Dyna backbone. Full derivations + ablations in §Methods of the paper. Reference implementation in <a href="https://github.com/wcarvalho/multitask_preplay">github.com/wcarvalho/multitask_preplay</a>.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CITE ============================================================ -->
+  <section id="cite">
+    <div class="measure">
+      <div class="section__heading">Cite</div>
+      <h2>BibTeX</h2>
+      <div class="bibtex">
+        <button class="bibtex__copy" data-target="bibtex-block">Copy</button>
+        <pre id="bibtex-block"><code>@article{carvalho2025preemptive,
   author    = {Carvalho, Wilka and Hall-McMaster, Sam and Lee, Honglak and Gershman, Samuel J.},
   title     = {Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines},
   journal   = {arXiv preprint arXiv:2507.05561},
   year      = {2025},
 }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
-        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- RELATED ========================================================= -->
+  <section id="related">
+    <div class="measure">
+      <div class="section__heading">Related</div>
+      <h2>Companion work and pointers.</h2>
+
+      <p><strong><a href="https://github.com/KempnerInstitute/nicewebrl">NiceWebRL</a></strong> — a Python library for quickly making human-subject experiments that leverage machine RL environments. Supports 50+ machine RL environments and was used for all experiments in this paper.</p>
+
+      <p><strong><a href="https://arxiv.org/abs/2502.20349">Naturalistic Computational Cognitive Science</a></strong> — a position paper on why and how to build generalizable models of human behavior that scale to increasingly naturalistic experimental paradigms. This project is an example: predicting human behavior first in a fully-observable grid-world, then in a partially-observable 2D minecraft environment.</p>
+
+      <p><strong><a href="https://arxiv.org/abs/2402.06590">Predictive representations: building blocks of intelligence</a></strong> — a review of predictive representations in machine learning, cognitive science, and neuroscience. Focuses on the successor representation family; arguments equally apply to <a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">generalized value functions</a>, of which Multitask Preplay is an example.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer__cols">
+    <div>
+      <h4>Multitask Preplay</h4>
+      <div>Preemptive Solving of Future Problems in Humans and Machines</div>
+      <div style="margin-top: 8px; color: var(--ink-muted);">Carvalho · Hall-McMaster · Lee · Gershman</div>
+      <div style="margin-top: 4px; color: var(--ink-muted);">Preprint · 2025 · <a href="https://arxiv.org/abs/2507.05561">arXiv:2507.05561</a></div>
+      <div style="margin-top: 16px; color: var(--ink-muted); font-size: 13px;">
+        Page generated via <a href="https://github.com/wcarvalho">/project-page</a>. Template lineage: Nerfies / Horwitz academic project page; CC BY-SA 4.0.
+      </div>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://arxiv.org/pdf/2507.05561">Paper (PDF)</a></li>
+        <li><a href="https://arxiv.org/abs/2507.05561">arXiv</a></li>
+        <li><a href="https://github.com/wcarvalho/multitask_preplay">Code (GitHub)</a></li>
+        <li><a href="https://doi.org/10.17605/OSF.IO/M53QH">Data — JaxMaze (OSF)</a></li>
+        <li><a href="https://doi.org/10.17605/OSF.IO/B2EVM">Data — Craftax (OSF)</a></li>
+        <li><a href="https://x.com/cogscikid/status/2052370912607961247">Launch thread</a></li>
+        <li><a href="https://docs.google.com/presentation/d/1qR1M4uM-fJ6Xcj8duBI48CAeqZBN4MlE2uv74NlfKYI/edit?usp=sharing">Slides</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Authors</h4>
+      <ul>
+        <li><a href="https://cogscikid.com/">Wilka Carvalho</a></li>
+        <li><a href="https://samhall-mcmaster.com/">Sam Hall-McMaster</a></li>
+        <li><a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a></li>
+        <li><a href="https://gershmanlab.com/">Samuel J. Gershman</a></li>
+      </ul>
     </div>
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('.bibtex__copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      navigator.clipboard.writeText(target.innerText.trim()).then(() => {
+        btn.dataset.state = 'copied';
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          delete btn.dataset.state;
+          btn.textContent = 'Copy';
+        }, 1600);
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
