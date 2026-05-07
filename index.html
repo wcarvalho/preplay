@@ -10,7 +10,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines" />
-  <meta property="og:description" content="One mechanism. Two puzzles. A single algorithm explains a behavioral bias in people and scales an RL agent to 10,000 unseen worlds. Read the paper." />
+  <meta property="og:description" content="The same person solves a new task faster from a familiar juncture than from an equally-distant unfamiliar one. We argue offline preplay caches the route. Read the paper." />
   <meta property="og:url" content="https://cogscikid.com/preplay/" />
   <meta property="og:image" content="https://cogscikid.com/preplay/static/images/og-card.png" />
   <meta property="og:image:width" content="1200" />
@@ -26,7 +26,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines" />
-  <meta name="twitter:description" content="One mechanism. Two puzzles. A single algorithm explains a behavioral bias in people and scales an RL agent to 10,000 unseen worlds. Read the paper." />
+  <meta name="twitter:description" content="The same person solves a new task faster from a familiar juncture than from an equally-distant unfamiliar one. We argue offline preplay caches the route. Read the paper." />
   <meta name="twitter:image" content="https://cogscikid.com/preplay/static/images/og-card.png" />
   <meta name="twitter:image:alt" content="Multitask Preplay — Carvalho · Hall-McMaster · Lee · Gershman." />
   <meta name="twitter:creator" content="@cogscikid" />
@@ -106,6 +106,7 @@
       font-family: var(--font-serif); font-size: var(--fs-base); line-height: var(--lh-body);
       font-feature-settings: "kern", "liga", "onum";
       text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+      overflow-wrap: anywhere;
     }
     h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 600; line-height: var(--lh-tight); margin: 0 0 var(--sp-3); letter-spacing: -0.01em; }
     h1 { font-size: var(--fs-3xl); letter-spacing: -0.02em; }
@@ -128,7 +129,7 @@
     .hero__title { font-size: clamp(34px, 5vw, var(--fs-3xl)); margin-bottom: var(--sp-4); max-width: 22ch; }
     .hero__claim { font-size: var(--fs-xl); color: var(--ink-soft); margin-bottom: var(--sp-4); max-width: 50ch; font-style: italic; line-height: 1.4; }
     .hero__authors { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: var(--sp-5); line-height: 1.7; }
-    .hero__authors .author { white-space: nowrap; }
+    .hero__authors .author { white-space: nowrap; display: inline-block; }
     .hero__authors .author + .author::before { content: " · "; color: var(--ink-muted); }
     .hero__authors .affiliation-line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); color: var(--ink-muted); margin-top: var(--sp-3); font-size: 14px; }
     .hero__authors .affiliation-line .lab-logo { height: 22px; width: auto; opacity: 0.85; vertical-align: middle; margin-right: var(--sp-2); }
@@ -152,7 +153,8 @@
     .contributions li { counter-increment: contrib; position: relative; padding-left: var(--sp-7); margin-bottom: var(--sp-4); }
     .contributions li::before { content: counter(contrib); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--bg); display: grid; place-items: center; font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 600; }
     figure { margin: var(--sp-5) 0; text-align: center; }
-    figure img, figure video { max-width: 100%; height: auto; border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm); }
+    figure img, figure video { max-width: min(100%, var(--measure)); height: auto; margin-left: auto; margin-right: auto; display: block; border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm); }
+    .hero__demo img, .hero__demo video { max-width: 100%; }
     figcaption { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--ink-soft); text-align: left; margin-top: var(--sp-3); max-width: var(--measure); margin-left: auto; margin-right: auto; line-height: 1.55; }
     figcaption .figure-label { font-weight: 600; color: var(--ink); margin-right: var(--sp-2); }
     .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
@@ -216,9 +218,9 @@
 
   <!-- HERO ============================================================ -->
   <section class="hero">
-    <div class="hero__eyebrow">Multitask Preplay · Preprint · 2025</div>
+    <div class="hero__eyebrow">Multitask Preplay · Under review at PNAS · 2025</div>
     <h1 class="hero__title">Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines</h1>
-    <p class="hero__claim">During offline replay, humans and AI agents simulate goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to thousands of unseen worlds.</p>
+    <p class="hero__claim">The same person solves a new task faster from a familiar juncture than from an equally-distant unfamiliar one — as if the route had been pre-rehearsed. We argue offline preplay simulates unpursued goals into cached predictions that explain this bias and scale RL to thousands of unseen worlds.</p>
 
     <div class="hero__authors">
       <span class="author"><a href="https://cogscikid.com/">Wilka Carvalho</a><sup>1</sup></span><span class="author"><a href="https://samhall-mcmaster.com/">Sam Hall-McMaster</a><sup>2</sup></span><span class="author"><a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a><sup>3,4</sup></span><span class="author"><a href="https://gershmanlab.com/">Samuel J. Gershman</a><sup>1,2</sup></span>
@@ -256,7 +258,7 @@
         <source src="./static/videos/preplay-hero.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <figcaption><span class="figure-label">Demo.</span> One mechanism. Two puzzles. While pursuing one task in our 2D Minecraft (Craftax) environment, an agent encounters goals it didn't pursue — and caches solutions for them via offline preplay. When a new task arrives, behavior is fast and reactive, as if the solution had been pre-rehearsed.</figcaption>
+      <figcaption><span class="figure-label">Demo.</span> One mechanism. Two puzzles. While pursuing one task in our 2D Minecraft (Craftax) environment, an agent encounters accessible goals it doesn't pursue. During offline replay, it preplays — counterfactually simulates — pursuing those goals, caching predictions for them. When a new task arrives, behavior on it is fast and reactive, as if the route had been pre-rehearsed.</figcaption>
     </figure>
   </section>
 
@@ -266,12 +268,12 @@
       <div class="section__heading">TLDR</div>
 
       <div class="tldr">
-        <p><strong>People are faster at new tasks when they reuse an old path</strong> — even when the reused path is longer than the optimal shortcut. We argue this happens because, during offline replay, humans and AI agents simulate goals they didn't pursue — caching solutions into a shared predictive representation. The same algorithm explains a behavioral bias in people <em>and</em> scales an RL agent to 10,000 unseen Craftax worlds.</p>
+        <p><strong>The same person solves a new task faster when they start from a familiar juncture than from an equally-distant unfamiliar one</strong> — as if the route had been pre-rehearsed. We argue this happens because, while pursuing one task, you encounter accessible goals you don't pursue; during offline replay, you preplay those unpursued goals and cache predictions for them; at test time, behavior on a familiar juncture is fast and reactive. The same algorithm explains 5 pre-registered behavioral predictions in people — including partial path reuse even when the new shortcut is shorter — and scales an RL agent to 10,000 unseen Craftax worlds.</p>
       </div>
 
       <ol class="contributions">
         <li><strong>Algorithm.</strong> Multitask Preplay: replay one task; preplay the goals you observed but didn't pursue; cache the resulting trajectories into a shared predictive representation.</li>
-        <li><strong>Behavioral evidence.</strong> Across grid-world and Craftax experiments (n≈100/each, four pre-registered predictions), people behave as if they have rehearsed unannounced goals — faster RTs at familiar junctures, partial path reuse even when the new shortcut is shorter.</li>
+        <li><strong>Behavioral evidence.</strong> Across grid-world and Craftax experiments (n≈100/each, 5 pre-registered predictions), people behave as if they have preemptively rehearsed goals before they encounter them — faster RTs at familiar junctures pointing toward an unannounced goal, partial path reuse even when the new shortcut is shorter.</li>
         <li><strong>AI scaling.</strong> Beats Dyna, Universal Value Functions, Universal Successor Features, and Hindsight Experience Replay on transfer to 10,000 held-out Craftax environments.</li>
         <li><strong>Bridging.</strong> One computational idea — offline counterfactual simulation — connects human behavioral biases to RL generalization. AI and cognitive science can keep informing each other on this template.</li>
       </ol>
@@ -283,6 +285,8 @@
     <div class="measure">
       <div class="section__heading">The Idea</div>
       <h2>One mechanism. Two puzzles.</h2>
+
+      <p style="font-style: italic; color: var(--ink-soft); font-size: var(--fs-lg); margin-bottom: var(--sp-5);">Do RL agents really need to replan from scratch for every new goal? Why do rodents "preplay" goals they haven't pursued?</p>
 
       <p>While searching for coffee in a new neighborhood, you may come across gyms, grocery stores, and parks — enabling you to quickly find these locations later when you need them. You weren't told to look for the grocery store. But when the goal becomes "go to the grocery store," your behavior is fast and reactive, as if you'd planned the route already.</p>
 
@@ -306,11 +310,11 @@
   <section id="evidence">
     <div class="measure">
       <div class="section__heading">Behavioral Evidence</div>
-      <h2>People behave as if they've rehearsed goals they were never told about.</h2>
+      <h2>People behave as if they've rehearsed goals before they encounter them.</h2>
 
-      <p>In principle, you'd rehearse tasks you expect to face. In practice, our experiments suggest people behave as if they've rehearsed goals they weren't told about. Spawn them at a familiar juncture, point them at an unannounced goal — they're faster than at a novel spot the same distance away. Only Multitask Preplay predicts this pattern.</p>
+      <p>We tested this in a setting where train and test conditions involved distinct tasks. Despite only ever being trained on the train tasks, people behave as if they've rehearsed goals they weren't told about. Spawn the same person at a familiar juncture, point them at a novel goal — they're faster than from an unfamiliar start the same distance away. Only Multitask Preplay predicts this.</p>
 
-      <p>Across four pre-registered grid-world experiments and a 2D Minecraft (Craftax) experiment, we test specific predictions. The headline finding: people are <strong>faster</strong> at a new task when they partially reuse a training path — <strong>even when the reused path is longer than the optimal shortcut</strong>. Reused-path length 61 vs. shortcut length 55; subjects still partially reuse 62.8% of the time, and step-by-step response times are lower on the reused step. This inverts what model-free, decision-time, or hindsight-based methods predict.</p>
+      <p>Across grid-world (JaxMaze) and 2D Minecraft (Craftax) studies, we test 5 pre-registered predictions. The headline finding: <strong>the same person is faster at the same novel task when starting from a familiar location than from an unfamiliar one</strong> — even when both starts are equally far from the goal. Multitask Preplay explains why: when a person passed by that location during training, they preplayed the route from there to nearby goals, and so the route is already cached when the test arrives. This inverts what model-free, decision-time, or hindsight-based methods predict.</p>
     </div>
 
     <figure>
@@ -318,17 +322,21 @@
         <source src="./static/videos/juncture-experiment.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <figcaption><span class="figure-label">Demo.</span> A subject performing a juncture-condition trial. The subject's path partially reuses a previously trained route — even though a shorter alternative is visible. Response times on reused steps are faster than on novel ones.</figcaption>
+      <figcaption><span class="figure-label">Demo.</span> A subject performing a trial in our juncture-spawn experiment. Spawned at a familiar juncture from training, the subject is asked to reach a novel goal. Their first response from the familiar juncture is faster than when the same subject is spawned at an unfamiliar location the same distance from the goal.</figcaption>
     </figure>
 
     <figure>
       <img src="./static/images/figure-3b-juncture-rt.png" alt="Four panels (I, J, K, L). I-K: JaxMaze layouts showing the same eval target reached from a familiar juncture (Near, Known), the same juncture with the eval goal hidden (Near, Unknown), and a novel distance-matched location (Far, Known). L: bar chart of delta log first-RT for each spawn condition; novel-spawn is significantly slower than juncture-spawn for both known and unknown evaluation goals." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 3.</span> Juncture-spawn experiment (JaxMaze). Subjects are spawned at one of three locations during evaluation: <strong>(I)</strong> a familiar juncture from training, with the test goal announced; <strong>(J)</strong> the same familiar juncture, but the test goal is unannounced and must be inferred from the available cues; <strong>(K)</strong> a novel location, distance-matched to the goal. <strong>(L)</strong> Δ log first-RT is significantly elevated when spawning from far novel locations vs. familiar junctures (***), even when the test goal is unknown. Subjects behave as if they have rehearsed the path from familiar junctures to goals they were not told about.</figcaption>
+      <figcaption><span class="figure-label">Figure 3.</span> Juncture-spawn experiment (JaxMaze). Subjects are spawned at one of three locations during evaluation: <strong>(I)</strong> a familiar juncture from training, with the test goal announced; <strong>(J)</strong> the same familiar juncture, but the test goal is unannounced and must be inferred from the available cues; <strong>(K)</strong> an unfamiliar location, distance-matched to the goal. <strong>(L)</strong> Δ log first-RT is significantly elevated when spawning from unfamiliar locations vs. familiar junctures (***), even when the test goal is unknown. Subjects behave as if they have rehearsed the path to those goals before they encounter them as the announced task.</figcaption>
     </figure>
+
+    <div class="measure">
+      <p>The juncture-spawn advantage is one signature; <strong>partial path reuse</strong> is another. Give a person a new goal near an old route, and they don't take the optimal shortcut — they partially reuse the trained path. We observe this even when the reused path is <em>longer</em> than the available shortcut: in our path-reuse experiment, the reused-path length is 61 steps versus a shortcut of 55, and subjects still partially reuse the trained path 62.8% of the time, with lower step-by-step response times on the reused segment. To test whether this is a generic "habit" effect or something specific to multi-goal preplay, we benchmarked humans against a panel of RL methods in Craftax. Humans and Multitask Preplay cluster at high success <em>and</em> high path reuse; Dyna, UVF, USFA, and HER all fall away.</p>
+    </div>
 
     <figure>
       <img src="./static/images/figure-3a-model-comparison.png" alt="Three panels (A, B, C). A: a procedurally generated 2D Minecraft (Craftax) overworld with the agent spawn, training stones marked by stars, and an evaluation stone visible nearby. B: the agent's partial view (foreground panel) and inventory bar. C: scatter plot of path-reuse rate (X) vs. success rate (Y); humans (blue: known eval goal; orange: unknown eval goal) cluster at high success and high path-reuse, with Multitask Preplay alongside; Dyna, Universal Value Function, Universal Landmark Successor Features, and Hindsight Experience Replay all sit far below — they generalize but don't reuse paths." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 4.</span> 2D Minecraft (Craftax) behavioral experiment. <strong>(A)</strong> Subjects learn to obtain training stones across procedurally generated maps; an evaluation stone is visibly nearby in some maps. <strong>(B)</strong> During evaluation, subjects only see a partial view of the world plus their inventory. <strong>(C)</strong> Generalization success vs. path reuse, by model. Humans cluster at high success <em>and</em> high path-reuse — both when the eval goal is known (blue) and unknown (orange). Of all RL methods tested, only <strong>Multitask Preplay</strong> lands in the same region. Dyna, UVF, USFA, and HER all fall well below: they generalize but don't reuse paths the way humans do.</figcaption>
+      <figcaption><span class="figure-label">Figure 4.</span> 2D Minecraft (Craftax) behavioral experiment. <strong>(A)</strong> Subjects learn to obtain training stones across procedurally generated maps; an evaluation stone is visibly nearby in some maps. <strong>(B)</strong> During evaluation, subjects only see a partial view of the world plus their inventory. <strong>(C)</strong> Generalization success vs. partial path reuse, by model. Humans cluster at high success <em>and</em> high partial path-reuse — both when the eval goal is known (blue) and unknown (orange). Of all RL methods tested, only <strong>Multitask Preplay</strong> lands in the same region. Dyna, UVF, USFA, and HER all fall well below: they generalize but don't partially reuse paths the way humans do.</figcaption>
     </figure>
   </section>
 
@@ -439,7 +447,7 @@
       <h4>Multitask Preplay</h4>
       <div>Preemptive Solving of Future Problems in Humans and Machines</div>
       <div style="margin-top: 8px; color: var(--ink-muted);">Carvalho · Hall-McMaster · Lee · Gershman</div>
-      <div style="margin-top: 4px; color: var(--ink-muted);">Preprint · 2025 · <a href="https://arxiv.org/abs/2507.05561">arXiv:2507.05561</a></div>
+      <div style="margin-top: 4px; color: var(--ink-muted);">Under review at PNAS · 2025 · <a href="https://arxiv.org/abs/2507.05561">arXiv:2507.05561</a></div>
       <div style="margin-top: 16px; color: var(--ink-muted); font-size: 13px;">
         Page generated via <a href="https://github.com/wcarvalho">/project-page</a>. Template lineage: Nerfies / Horwitz academic project page; CC BY-SA 4.0.
       </div>
