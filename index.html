@@ -322,21 +322,13 @@
     </figure>
 
     <figure>
-      <img src="./static/images/result-1.png" alt="Grid-world experiments and model comparisons. Multitask Preplay best matches human success and path-reuse rates." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 3a.</span> Grid-world (JaxMaze) results. Across four experiments, Multitask Preplay best matches human success rates and path-reuse rates. Decision-time planning matches success but not path-reuse. Successor features and hindsight experience replay match neither.</figcaption>
-    </figure>
-    <figure>
-      <img src="./static/images/result-2.png" alt="Response time analysis on grid-world experiments." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 3b.</span> Response-time evidence consistent with offline preplay. Subjects spawned at a familiar juncture (used during training) are faster than subjects spawned the same distance from the goal at a novel location.</figcaption>
+      <img src="./static/images/figure-3b-juncture-rt.png" alt="Four panels (I, J, K, L). I-K: JaxMaze layouts showing the same eval target reached from a familiar juncture (Near, Known), the same juncture with the eval goal hidden (Near, Unknown), and a novel distance-matched location (Far, Known). L: bar chart of delta log first-RT for each spawn condition; novel-spawn is significantly slower than juncture-spawn for both known and unknown evaluation goals." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 3.</span> Juncture-spawn experiment (JaxMaze). Subjects are spawned at one of three locations during evaluation: <strong>(I)</strong> a familiar juncture from training, with the test goal announced; <strong>(J)</strong> the same familiar juncture, but the test goal is unannounced and must be inferred from the available cues; <strong>(K)</strong> a novel location, distance-matched to the goal. <strong>(L)</strong> Δ log first-RT is significantly elevated when spawning from far novel locations vs. familiar junctures (***), even when the test goal is unknown. Subjects behave as if they have rehearsed the path from familiar junctures to goals they were not told about.</figcaption>
     </figure>
 
     <figure>
-      <img src="./static/images/crafter.png" alt="An example Craftax map with a starting agent, training stones, and an evaluation stone visible nearby." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 4a.</span> 2D Minecraft (Craftax) experiment. Subjects learn to obtain training stones across procedurally generated maps. Each map contains a visibly nearby evaluation stone they may or may not be told about.</figcaption>
-    </figure>
-    <figure>
-      <img src="./static/images/result-3.png" alt="Craftax behavioral results. Multitask Preplay best matches human generalization success and path-reuse rates." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 4b.</span> Craftax behavioral results. Of all model classes tested, Multitask Preplay best matches human generalization success and path-reuse rates.</figcaption>
+      <img src="./static/images/figure-3a-model-comparison.png" alt="Three panels (A, B, C). A: a procedurally generated 2D Minecraft (Craftax) overworld with the agent spawn, training stones marked by stars, and an evaluation stone visible nearby. B: the agent's partial view (foreground panel) and inventory bar. C: scatter plot of path-reuse rate (X) vs. success rate (Y); humans (blue: known eval goal; orange: unknown eval goal) cluster at high success and high path-reuse, with Multitask Preplay alongside; Dyna, Universal Value Function, Universal Landmark Successor Features, and Hindsight Experience Replay all sit far below — they generalize but don't reuse paths." loading="lazy" />
+      <figcaption><span class="figure-label">Figure 4.</span> 2D Minecraft (Craftax) behavioral experiment. <strong>(A)</strong> Subjects learn to obtain training stones across procedurally generated maps; an evaluation stone is visibly nearby in some maps. <strong>(B)</strong> During evaluation, subjects only see a partial view of the world plus their inventory. <strong>(C)</strong> Generalization success vs. path reuse, by model. Humans cluster at high success <em>and</em> high path-reuse — both when the eval goal is known (blue) and unknown (orange). Of all RL methods tested, only <strong>Multitask Preplay</strong> lands in the same region. Dyna, UVF, USFA, and HER all fall well below: they generalize but don't reuse paths the way humans do.</figcaption>
     </figure>
   </section>
 
