@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Multitask Preplay — Preemptive Solving of Future Problems in Humans and Machines</title>
-  <meta name="description" content="During offline replay, both humans and AI agents simulate goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to 10,000 unseen Craftax environments." />
+  <meta name="description" content="During offline replay, both humans and AI agents simulate pursuit of goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to 10,000 unseen Craftax environments." />
   <link rel="canonical" href="https://cogscikid.com/preplay/" />
 
   <!-- Open Graph -->
@@ -220,7 +220,7 @@
   <section class="hero">
     <div class="hero__eyebrow">Multitask Preplay · Under review at PNAS · 2025</div>
     <h1 class="hero__title">Preemptive Solving of Future Problems: Multitask Preplay in Humans and Machines</h1>
-    <p class="hero__claim">During offline replay, humans and AI agents simulate goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to thousands of unseen worlds.</p>
+    <p class="hero__claim">During offline replay, humans and AI agents simulate pursuit of goals they did not pursue — caching solutions into a shared predictive representation that explains a counterintuitive human bias and improves RL generalization to 10,000 unseen worlds.</p>
 
     <div class="hero__authors">
       <span class="author"><a href="https://cogscikid.com/">Wilka Carvalho</a><sup>1</sup></span><span class="author"><a href="https://samhall-mcmaster.com/">Sam Hall-McMaster</a><sup>2</sup></span><span class="author"><a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a><sup>3,4</sup></span><span class="author"><a href="https://gershmanlab.com/">Samuel J. Gershman</a><sup>1,2</sup></span>
@@ -258,7 +258,7 @@
         <source src="./static/videos/preplay-hero.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <figcaption><span class="figure-label">Demo.</span> One mechanism. Two puzzles. While pursuing one task in our 2D Minecraft (Craftax) environment, an agent encounters accessible goals it doesn't pursue. During offline replay, it preplays — counterfactually simulates — pursuing those goals, caching predictions for them. When a new task arrives, behavior on it is fast and reactive, as if the route had been pre-rehearsed.</figcaption>
+      <figcaption><span class="figure-label">Demo.</span> One mechanism. Two puzzles. While pursuing one task in our 2D Minecraft (Craftax) environment, an agent encounters accessible goals it doesn't pursue. During offline replay, it preplays — counterfactually simulates — pursuing those goals, caching predictions for them. When a new task arrives, behavior on it is fast and reactive, as if the route had already been rehearsed.</figcaption>
     </figure>
   </section>
 
@@ -272,10 +272,10 @@
       </div>
 
       <ol class="contributions">
-        <li><strong>Algorithm.</strong> Multitask Preplay: replay one task; preplay the goals you observed but didn't pursue; cache the resulting trajectories into a shared predictive representation.</li>
-        <li><strong>Behavioral evidence.</strong> Across grid-world and Craftax experiments (n≈100/each, 5 pre-registered predictions), people behave as if they have preemptively rehearsed goals before they encounter them — faster RTs at familiar junctures pointing toward an unannounced goal, partial path reuse even when the new shortcut is shorter.</li>
-        <li><strong>AI scaling.</strong> Beats Dyna, Universal Value Functions, Universal Successor Features, and Hindsight Experience Replay on transfer to 10,000 held-out Craftax environments.</li>
-        <li><strong>Bridging.</strong> One computational idea — offline counterfactual simulation — connects human behavioral biases to RL generalization. AI and cognitive science can keep informing each other on this template.</li>
+        <li><strong>Algorithm.</strong> Multitask Preplay: replay one task; preplay the goals you observed but didn't pursue; cache the resulting solutions into a shared predictive representation.</li>
+        <li><strong>Behavioral evidence.</strong> Across five behavioral experiments in grid-worlds and 2D Minecraft (Craftax) — n=100 each, with preregistered predictions — people behave as if they have preemptively rehearsed goals before they encounter them: lower response times at familiar junctures pointing toward an unannounced goal, and partial reuse of old paths even when a shorter route is available.</li>
+        <li><strong>AI scaling.</strong> Beats Dyna, Universal Value Function Approximators (UVFA), Universal Successor Feature Approximators (USFA), and Hindsight Experience Replay (HER) on transfer to 10,000 held-out Craftax environments.</li>
+        <li><strong>Bridging.</strong> One computational idea — offline counterfactual simulation — connects a human behavioral bias to RL generalization, a template for AI and cognitive science to keep informing each other.</li>
       </ol>
     </div>
   </section>
@@ -284,15 +284,15 @@
   <section id="idea">
     <div class="measure">
       <div class="section__heading">The Idea</div>
-      <h2>One mechanism. Two puzzles.</h2>
+      <h2>Preplay the goals you didn't pursue.</h2>
 
       <p style="font-style: italic; color: var(--ink-soft); font-size: var(--fs-lg); margin-bottom: var(--sp-5);">Do RL agents really need to replan from scratch for every new goal? Why do rodents "preplay" goals they haven't pursued?</p>
 
       <p>While searching for coffee in a new neighborhood, you may come across gyms, grocery stores, and parks — enabling you to quickly find these locations later when you need them. You weren't told to look for the grocery store. But when the goal becomes "go to the grocery store," your behavior is fast and reactive, as if you'd planned the route already.</p>
 
-      <p>We hypothesize this happens because, during offline replay, you image pursuing goals you encountered along the way <em>but didn't actually pursue</em>. Those counterfactual trajectories cache into a single value function that covers many goals. We call it <strong>Multitask Preplay</strong> — a nod to hippocampal preplay, where place cells fire for places the animal hasn't been yet. The underlying RL idea goes back to Kaelbling in the 90s: use one experience to learn about many goals. We wanted to see what it looks like at scale.</p>
+      <p>We hypothesize this happens because, during offline replay, you imagine pursuing goals you encountered along the way <em>but didn't actually pursue</em>. Those counterfactual trajectories cache solutions into a single value function that covers many goals. We call it <strong>Multitask Preplay</strong> — a nod to hippocampal preplay, where place cells fire for places the animal hasn't been yet (Dragoi &amp; Tonegawa, 2011). The underlying RL idea goes back to Kaelbling (1993): use one experience to learn about many goals. We wanted to see what it looks like at scale.</p>
 
-      <p>Multitask Preplay generalizes Dyna, which only caches the goal you pursued. It sits between Dyna (model-based, single-task) and successor features (predictive representations across goals), combining what each does well.</p>
+      <p>Multitask Preplay generalizes Dyna (Sutton, 1990), which only caches a value for the goal you pursued. It keeps Dyna's model-based simulation and adds what successor features (Barreto et al., 2017) do well — predictive representations that span goals.</p>
     </div>
 
     <figure>
@@ -302,7 +302,7 @@
 
     <figure>
       <img src="./static/images/algo-comparison.png" alt="Two-axis categorization of RL methods. Top: a 2x3 grid mapping number-of-predictions-per-state (single reward vs. multiple) against compute strategy (model-free, model-based background learning, decision-time planning). Multitask Preplay (Ours) sits in the multi-prediction model-based-background cell. Bottom: gridworld behavior for Q-learning, Successor Features / HER, Dyna, and Multitask Preplay, showing what each caches when the agent has experienced the path to a coffee shop while observing food and grocery store along the way." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 2.</span> Where Multitask Preplay fits among RL methods. <strong>Top:</strong> Two axes — number of predictions per state (1 reward vs. multiple) × compute strategy (model-free, model-based background learning, decision-time planning). Yellow methods cache the results of computation; purple methods leverage model-based planning. <strong>Bottom:</strong> Behavior in a gridworld where the agent walked to a coffee shop while passing food and a grocery store. <strong>(a) Q-learning</strong> caches a single reward prediction along the experienced path. <strong>(b) Successor Features / HER</strong> cache predictions for multiple goals — but only those whose features were experienced. <strong>(c) Dyna</strong> simulates extra coffee-shop trajectories to refine the same single prediction. <strong>(d) Multitask Preplay</strong> simulates trajectories to <em>accessible-but-unpursued</em> goals (food, groceries), caching a predictive map that covers all three.</figcaption>
+      <figcaption><span class="figure-label">Figure 2.</span> Where Multitask Preplay fits among RL methods. <strong>Top:</strong> Two axes — number of predictions per state (1 reward vs. multiple) × compute strategy (model-free, model-based background learning, decision-time planning). Yellow methods cache the results of computation; purple methods rely on model-based planning. <strong>Bottom:</strong> Behavior in a gridworld where the agent walked to a coffee shop while passing food and a grocery store. <strong>(a) Q-learning</strong> caches a single reward prediction along the experienced path. <strong>(b) Successor Features / HER</strong> cache predictions for multiple goals — but only those whose features were experienced. <strong>(c) Dyna</strong> simulates extra coffee-shop trajectories but still refines only the single coffee-shop prediction. <strong>(d) Multitask Preplay</strong> simulates trajectories to <em>accessible-but-unpursued</em> goals (food, groceries), caching a predictive map that covers all three.</figcaption>
     </figure>
   </section>
 
@@ -312,9 +312,9 @@
       <div class="section__heading">Behavioral Evidence</div>
       <h2>People behave as if they've rehearsed goals before they encounter them.</h2>
 
-      <p>We tested this in a setting where train and test conditions involved distinct tasks. Despite only ever being trained on the train tasks, people behave as if they've rehearsed goals they weren't told about. Spawn the same person at a familiar juncture, point them at a novel goal — they're faster than from an unfamiliar start the same distance away. Only Multitask Preplay predicts this.</p>
+      <p>We trained people on one set of tasks, then tested them on different ones. In principle, you'd rehearse tasks you expect to face. In practice — across five behavioral experiments in grid-worlds (JaxMaze) and 2D Minecraft (Craftax), n=100 each, with preregistered predictions — people behave as if they've rehearsed goals they were never told about.</p>
 
-      <p>Across grid-world (JaxMaze) and 2D Minecraft (Craftax) studies, we test 5 pre-registered predictions. The headline finding: <strong>the same person is faster at the same novel task when starting from a familiar location than from an unfamiliar one</strong> — even when both starts are equally far from the goal. Multitask Preplay explains why: when a person passed by that location during training, they preplayed the route from there to nearby goals, and so the route is already cached when the test arrives. This inverts what model-free, decision-time, or hindsight-based methods predict.</p>
+      <p>The headline finding: <strong>the same person is faster at the same novel task when starting from a familiar location than from an unfamiliar one</strong> — even when both starts are equally far from the goal. Under Multitask Preplay this is expected: someone who passed that juncture during training would have preplayed routes from it to nearby goals, so the route is already cached when the test arrives. The alternatives predict no such advantage — under decision-time planning, for example, response times should be approximately equal from either start. Only Multitask Preplay predicts the familiar-juncture speedup.</p>
     </div>
 
     <figure>
@@ -327,16 +327,18 @@
 
     <figure>
       <img src="./static/images/figure-3b-juncture-rt.png" alt="Four panels (I, J, K, L). I-K: JaxMaze layouts showing the same eval target reached from a familiar juncture (Near, Known), the same juncture with the eval goal hidden (Near, Unknown), and a novel distance-matched location (Far, Known). L: bar chart of delta log first-RT for each spawn condition; novel-spawn is significantly slower than juncture-spawn for both known and unknown evaluation goals." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 3.</span> Juncture-spawn experiment (JaxMaze). Subjects are spawned at one of three locations during evaluation: <strong>(I)</strong> a familiar juncture from training, with the test goal announced; <strong>(J)</strong> the same familiar juncture, but the test goal is unannounced and must be inferred from the available cues; <strong>(K)</strong> an unfamiliar location, distance-matched to the goal. <strong>(L)</strong> Δ log first-RT is significantly elevated when spawning from unfamiliar locations vs. familiar junctures (***), even when the test goal is unknown. Subjects behave as if they have rehearsed the path to those goals before they encounter them as the announced task.</figcaption>
+      <figcaption><span class="figure-label">Figure 3.</span> Juncture-spawn experiment (JaxMaze). Subjects are spawned at one of three locations during evaluation: <strong>(I)</strong> a familiar juncture from training, with the test goal announced; <strong>(J)</strong> the same familiar juncture, but the test goal is unannounced and must be inferred from the available cues; <strong>(K)</strong> an unfamiliar location, distance-matched to the goal. <strong>(L)</strong> First response times (Δ log RT) are significantly higher from unfamiliar locations than from familiar junctures (***) — subjects are faster from familiar junctures even when the test goal is unannounced. Subjects behave as if they have rehearsed the path to those goals before they encounter them as the announced task.</figcaption>
     </figure>
 
     <div class="measure">
-      <p>The juncture-spawn advantage is one signature; <strong>partial path reuse</strong> is another. Give a person a new goal near an old route, and they don't take the optimal shortcut — they partially reuse the trained path. We observe this even when the reused path is <em>longer</em> than the available shortcut: in our path-reuse experiment, the reused-path length is 61 steps versus a shortcut of 55, and subjects still partially reuse the trained path 62.8% of the time, with lower step-by-step response times on the reused segment. To test whether this is a generic "habit" effect or something specific to multi-goal preplay, we benchmarked humans against a panel of RL methods in Craftax. Humans and Multitask Preplay cluster at high success <em>and</em> high path reuse; Dyna, UVF, USFA, and HER all fall away.</p>
+      <p>The juncture-spawn advantage is one signature; <strong>partial path reuse</strong> is another. Give a person a new goal near an old route, and they don't take the optimal shortcut — they partially reuse the trained path. We observe this even when the reused path is <em>longer</em> than the available shortcut: in our path-reuse experiment, the reused path runs 61 steps against a 55-step shortcut, and subjects still partially reuse the trained path 62.8% of the time, with lower step-by-step response times on the reused segment.</p>
+
+      <p>To test whether this is generic habit or something specific to multi-goal preplay, we benchmarked humans against a panel of RL methods in Craftax. Humans and Multitask Preplay cluster at high success <em>and</em> high path reuse; Dyna, UVFA, USFA, and HER generalize but don't reuse paths the way humans do.</p>
     </div>
 
     <figure>
       <img src="./static/images/figure-3a-model-comparison.png" alt="Three panels (A, B, C). A: a procedurally generated 2D Minecraft (Craftax) overworld with the agent spawn, training stones marked by stars, and an evaluation stone visible nearby. B: the agent's partial view (foreground panel) and inventory bar. C: scatter plot of path-reuse rate (X) vs. success rate (Y); humans (blue: known eval goal; orange: unknown eval goal) cluster at high success and high path-reuse, with Multitask Preplay alongside; Dyna, Universal Value Function, Universal Landmark Successor Features, and Hindsight Experience Replay all sit far below — they generalize but don't reuse paths." loading="lazy" />
-      <figcaption><span class="figure-label">Figure 4.</span> 2D Minecraft (Craftax) behavioral experiment. <strong>(A)</strong> Subjects learn to obtain training stones across procedurally generated maps; an evaluation stone is visibly nearby in some maps. <strong>(B)</strong> During evaluation, subjects only see a partial view of the world plus their inventory. <strong>(C)</strong> Generalization success vs. partial path reuse, by model. Humans cluster at high success <em>and</em> high partial path-reuse — both when the eval goal is known (blue) and unknown (orange). Of all RL methods tested, only <strong>Multitask Preplay</strong> lands in the same region. Dyna, UVF, USFA, and HER all fall well below: they generalize but don't partially reuse paths the way humans do.</figcaption>
+      <figcaption><span class="figure-label">Figure 4.</span> 2D Minecraft (Craftax) behavioral experiment. <strong>(A)</strong> Subjects learn to obtain training stones across procedurally generated maps; an evaluation stone is visibly nearby in some maps. <strong>(B)</strong> During evaluation, subjects only see a partial view of the world plus their inventory. <strong>(C)</strong> Generalization success vs. partial path reuse, by model. Humans cluster at high success <em>and</em> high partial path-reuse — both when the eval goal is known (blue) and unknown (orange). Of all RL methods tested, only <strong>Multitask Preplay</strong> lands in the same region. Dyna, UVFA, USFA, and HER all fall well below: they generalize but don't partially reuse paths the way humans do.</figcaption>
     </figure>
   </section>
 
@@ -344,9 +346,9 @@
   <section id="results">
     <div class="measure">
       <div class="section__heading">Results</div>
-      <h2>Only humans and Multitask Preplay clear the cliff.</h2>
+      <h2>Only humans and Multitask Preplay survive the train-to-test cliff.</h2>
 
-      <p>The ablation we found most telling: in Craftax, every baseline — Dyna, Universal Value Functions, Successor Features, Hindsight Experience Replay — trains to near-perfect success. At test, only humans and Multitask Preplay transfer. Every other method collapses.</p>
+      <p>The result we found most telling: in Craftax, every baseline — Dyna, UVFA, USFA, HER — reaches near-perfect success during training. At test, only humans and Multitask Preplay transfer. Every other method collapses.</p>
     </div>
 
     <figure>
@@ -354,9 +356,9 @@
       <figcaption><span class="figure-label">Figure 5.</span> Train vs. test on Craftax. <strong>Train</strong> (left): all methods, including humans, reach near-ceiling performance. <strong>Test</strong> (right): only humans and Multitask Preplay transfer. Every other RL baseline collapses. Humans and AI are evaluated on the same test set.</figcaption>
     </figure>
 
-    <h3 id="generalization">One agent, 10,000 new worlds.</h3>
+    <h3 id="generalization">One agent, 10,000 unseen worlds.</h3>
     <div class="measure">
-      <p>This same algorithm scales further. When learning from a finite set of environments, Multitask Preplay better generalizes to 10,000 unseen Craftax worlds. Dyna and model-free methods plateau long before that.</p>
+      <p>This same algorithm scales further. Trained on a fixed set of environments, Multitask Preplay generalizes to 10,000 unseen Craftax worlds — and its test performance keeps climbing as training environments are added, while Dyna and model-free methods plateau at lower performance.</p>
     </div>
 
     <figure>
@@ -379,11 +381,11 @@
       <div class="section__heading">Limitations</div>
       <h2>What this work doesn't do.</h2>
 
-      <p><strong>You need a reasonably accurate world model to preplay with.</strong> Multitask Preplay assumes access to a model that can roll out counterfactual goals during offline replay. We use ground-truth simulators in this paper. Whether the result holds when the world model itself is learned online — and how preplay interacts with a noisy or biased model — is not established here.</p>
+      <p><strong>You need a reasonably accurate world model to preplay with.</strong> Multitask Preplay assumes access to a model that can roll out trajectories toward counterfactual goals during offline replay. We use ground-truth simulators in this paper. Whether the result holds when the world model itself is learned online — and how preplay interacts with a noisy or biased model — is not established here.</p>
 
-      <p><strong>Tested on 2D environments with discrete tasks.</strong> Our results span gridworlds and 2D Minecraft. Whether the same mechanism scales to high-dimensional continuous control or to compositionally complex task structures (Habitat-class transfer) is the natural next step, but it's not what we showed.</p>
+      <p><strong>Tested on 2D environments with discrete tasks.</strong> Our results span gridworlds and 2D Minecraft. Whether the same algorithm scales to high-dimensional continuous control or to compositionally complex task structures — say, many interrelated tasks in unseen 3D homes — is the natural next step, but it's not what we showed.</p>
 
-      <p><strong>Behavioral evidence is consistent with preplay, not unique to it.</strong> Our behavioral predictions are derived from Multitask Preplay; the data is consistent with the algorithm. Other algorithms that share core properties (e.g., off-policy multi-goal value caching with TD-learning) may make similar predictions. The strongest part of the bridge claim is that <em>Multitask Preplay alone</em> matches both human path-reuse rates and the train/test cliff among the baselines we compared.</p>
+      <p><strong>Behavioral evidence is consistent with preplay, not unique to it.</strong> Our behavioral predictions are derived from Multitask Preplay, and the data are consistent with those predictions. Other algorithms that share its core ingredient — off-policy multi-goal value caching with TD learning — may make similar predictions. What we can say: among the baselines we compared, <em>Multitask Preplay alone</em> matches both human path-reuse rates and the train/test cliff.</p>
     </div>
   </section>
 
@@ -391,11 +393,11 @@
   <section id="next">
     <div class="measure">
       <div class="section__heading">What's Next</div>
-      <h2>Where this goes.</h2>
+      <h2>Learned world models, then unseen homes.</h2>
 
-      <p>Next we want to see what happens when the world model is learned online — for example, with MuZero — and to scale to domains like Habitat, where agents need to perform inter-related tasks in unseen homes.</p>
+      <p>Next we want to see what happens when the world model is learned online — for example, with MuZero — and to scale to domains like Habitat, where agents need to perform interrelated tasks in unseen homes.</p>
 
-      <p>Scaling there will lean on two corrections we developed along the way: <strong>off-task Q(λ)</strong> and <strong>conservative all-goals learning</strong>. They're what let us match the human data — and what we think will unlock Habitat-class transfer.</p>
+      <p>Scaling to Habitat will lean on two corrections we developed along the way: <strong>off-task Q(λ)</strong> and <strong>conservative all-goals learning</strong>. They're what let us match the human data — and what we think will unlock Habitat-class transfer.</p>
 
       <details class="methods">
         <summary>Methods (for the technically curious)</summary>
@@ -404,7 +406,7 @@
           <p><strong>Conservative all-goals learning.</strong> Keeps value estimates from drifting when extrapolating to unseen goals. Penalizes Q-values for actions absent from the data, suppressing inflated estimates while still propagating value from the true off-task reward.</p>
           <figure>
             <img src="./static/images/value-backprop.png" alt="A 3×3 grid comparing three losses (L_Qλ, L_OQλ, L_COQλ) across three trajectory cases. Top row: when greedy off-task actions match online actions, all three losses correctly back up value (green check). Middle row: when greedy off-task actions diverge from online actions, plain Q(λ) erroneously propagates on-task reward (red X) while off-task Q(λ) and the conservative variant cut the trace correctly. Bottom row: when greedy off-task actions are suboptimal for on-task data (overestimated Q-values), plain Q(λ) backs up the inflated value (red X), off-task Q(λ) backs up only from the inflated estimate (red X), and only the conservative variant suppresses the overestimate while still propagating from the true off-task reward (green check)." loading="lazy" />
-            <figcaption><span class="figure-label">Figure M1.</span> Why both corrections are needed. Each row depicts a trajectory τ on the left, with backup paths under three losses on the right: Q(λ), off-task Q(λ), and conservative off-task Q(λ). <strong>Top:</strong> when the off-task greedy policy matches the online actions, all three losses correctly propagate value from the rewarding state. <strong>Middle:</strong> when those greedy actions diverge, plain Q(λ) erroneously backs up on-task reward; off-task Q(λ) and its conservative variant cut the trace and propagate only from the off-task rewarding state. <strong>Bottom:</strong> when an unseen action's Q-value is overestimated, both Q(λ) variants back up from that inflated value; only the conservative variant suppresses inflated estimates while still propagating from the true reward.</figcaption>
+            <figcaption><span class="figure-label">Figure M1.</span> Why both corrections are needed. Each row depicts a trajectory τ on the left, with backup paths under three losses on the right: Q(λ), off-task Q(λ), and conservative off-task Q(λ). <strong>Top:</strong> when the off-task greedy policy matches the online actions, all three losses correctly propagate value from the rewarding state. <strong>Middle:</strong> when those greedy actions diverge, plain Q(λ) erroneously backs up on-task reward; off-task Q(λ) and its conservative variant cut the trace and propagate only from the off-task rewarding state. <strong>Bottom:</strong> when an unseen action's Q-value is overestimated, both plain and off-task Q(λ) back up from that inflated value; only the conservative variant suppresses inflated estimates while still propagating from the true reward.</figcaption>
           </figure>
           <p>Both corrections are drop-in on a Dyna backbone. Full derivations + ablations in §Methods of the paper. Reference implementation in <a href="https://github.com/wcarvalho/multitask_preplay">github.com/wcarvalho/multitask_preplay</a>.</p>
         </div>
@@ -435,11 +437,11 @@
       <div class="section__heading">Related</div>
       <h2>Companion work and pointers.</h2>
 
-      <p><strong><a href="https://github.com/KempnerInstitute/nicewebrl">NiceWebRL</a></strong> — a Python library for quickly making human-subject experiments that leverage machine RL environments. Supports 50+ machine RL environments and was used for all experiments in this paper.</p>
+      <p><strong><a href="https://github.com/KempnerInstitute/nicewebrl">NiceWebRL</a></strong> — a Python library for quickly building human-subject experiments on top of machine RL environments. Supports 50+ such environments and was used for all experiments in this paper.</p>
 
-      <p><strong><a href="https://arxiv.org/abs/2502.20349">Naturalistic Computational Cognitive Science</a></strong> — a position paper on why and how to build generalizable models of human behavior that scale to increasingly naturalistic experimental paradigms. This project is an example: predicting human behavior first in a fully-observable grid-world, then in a partially-observable 2D minecraft environment.</p>
+      <p><strong><a href="https://arxiv.org/abs/2502.20349">Naturalistic Computational Cognitive Science</a></strong> — a position paper on why and how to build generalizable models of human behavior that scale to increasingly naturalistic experimental paradigms. This project is an example: predicting human behavior first in a fully observable grid-world, then in a partially observable 2D Minecraft environment.</p>
 
-      <p><strong><a href="https://arxiv.org/abs/2402.06590">Predictive representations: building blocks of intelligence</a></strong> — a review of predictive representations in machine learning, cognitive science, and neuroscience. Focuses on the successor representation family; arguments equally apply to <a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">generalized value functions</a>, of which Multitask Preplay is an example.</p>
+      <p><strong><a href="https://arxiv.org/abs/2402.06590">Predictive representations: building blocks of intelligence</a></strong> — a review of predictive representations in machine learning, cognitive science, and neuroscience. Focuses on the successor representation family; the arguments apply equally to <a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">generalized value functions</a>, of which Multitask Preplay is an example.</p>
     </div>
   </section>
 
